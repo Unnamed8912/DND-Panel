@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "deps/css/history.css" %}">
+{% endblock %}
+
+{% block content%}
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Название Боя</th>
+            <th>Урон</th>
+            <th>Вылечено</th>
+            <th>Количество Ходов</th>
+            <th>Дата</th>
+            <th>Подробнее</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fight in fights%}
+        <tr>
+            <td>{{ fight.name }}</td>
+            <td>{{ fight.all_damage }}</td>
+            <td>{{ fight.all_health  }}</td>
+            <td>{{ fight.count_of_moves }}</td>
+            <td>{{ fight.date }}</td>
+            <td>
+                <div>
+                    <form method='get' action='review/'>
+                        <button class='delete-button' type='submit' name='fight_id' value='{{ fight.id }}'>Перейти</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

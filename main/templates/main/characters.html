@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "deps/css/characters.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="maindiv">
+    <div class="left">
+
+        {% for character in characters %}
+
+            <a class="character" href="{% url "main:display_character" character.slug %}">{{ character.name }}</a>
+
+        {% endfor %}
+
+        <a class='character' href="{% url "main:create" %}"> Добавить Персонажа </a>
+    </div>
+    {% block right %}{% endblock %}
+    </div>
+{% endblock  %}

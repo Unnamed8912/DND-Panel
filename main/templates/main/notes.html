@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "deps/css/notes.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="maindiv">
+    <p1 class='maindiv-head-notes'> Заметки </p1>
+    <ul class="notes-group-items">
+        {% for note in data %}
+        <li class="notes-item">
+            <div class="same-note">{{ note.date }} : {{ note.textData }}</div>
+            <form method='post'>
+                {% csrf_token %}
+                <button class='delete-btn' name='noteId' value='{{ note.id }}'>
+                    <img class='delete-btn-img' src='{% static "deps/css/krestik.png" %}'></img>
+                </button>
+            </form>
+        </li>    
+        {% endfor %}
+    </ul>
+    <form method='post'>
+        {% csrf_token %}
+        {{ form.textData }}<br>
+        <button class='button' type='submit'> Добавить Заметку </button>
+    </form>
+</div>
+{% endblock %}

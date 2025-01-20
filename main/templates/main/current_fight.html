@@ -1,0 +1,97 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "deps/css/curren_fight.css" %}">
+{% endblock %}
+
+{% block content%}
+<div class="name-of-fight">{{ fight.name }} {% if fight.is_ended %} (Закончен) {% endif %}</div>
+<div class="main-wrapper">
+<div class="list-group-items">
+    <div class="characters-list">
+        Союзники
+        {% for character in characters %}
+        <div class="character-item">
+            {{ character.name }} | {{ character.cur_health }} хп | {{ character.initiative }}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="enemies-list">
+        Враги
+        {% for enemie in enemies %}
+        <div class="enemies-item">
+            {{ enemie.name }} | {{ enemie.cur_health }} хп | {{ enemie.initiative }}
+            {% if enemie.is_dead %} (Мертв) {% endif %}
+        </div>
+        {% endfor %}
+        {% if fight.is_ended == False %}
+        <form method='POST'>
+            {% csrf_token %}
+            <input name='name_enemie' placeholder='Имя Врага'></input>
+            <input name='health_enemie' placeholder='ХП Врага'></input>
+            <input name='initiative_enemie' placeholder='Инициатива Врага'></input>
+            <button type='submitt'>Добавить</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% if fight.is_ended == False %}
+<div class="input-journal">
+<form method='POST'>
+    {% csrf_token %}
+    <select name='attacker'>
+        {% for character in characters %}
+        <option>{{character.name}}</option>
+        {% endfor %}
+        {% for enemie in enemies %}
+        <option>{{enemie.name}}</option>
+        {% endfor %}
+    </select>
+    использует
+    <input name='spell' placeholder='Введите заклинание'></input>
+    <select name='defender'>
+        {% for enemie in enemies %}
+        <option>{{enemie.name}}</option>
+        {% endfor %}
+        {% for character in characters %}
+        <option>{{character.name}}</option>
+        {% endfor %}
+    </select>
+    и наносит 
+    <input name='health' placeholder='Введите урон'></input>
+    единиц урона
+    <button type='submitt'>Отправить</button>
+</form>
+</div>
+{% endif %}
+    <div class="journal-list">
+        <p1> Журнал Боя </p1>
+        {% for journal in journals %}
+        <ul>
+            {% if journal.is_damage %}
+            {{ journal.attacker }} использует {{ journal.spell }} и наносит {{ journal.defender }} {{ journal.health }} единиц урона
+            {% else %}
+            {{ journal.defender }} был убит {{ journal.attacker }}
+            {% endif %}
+        </ul>
+        {% endfor %}
+    </div>
+    {% if fight.is_ended == False %}
+    <div class="end-of-fight-button">
+        <form method='POST'>
+            {% csrf_token %}
+            <button name='end_of_fight_id' value='{{ fight.id }}'>Закончить Бой</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="continue-of-fight-button">
+        <form method='POST'>
+            {% csrf_token %}
+            <button name='continue_of_fight_id' value='{{ fight.id }}'>Возобновить Бой</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

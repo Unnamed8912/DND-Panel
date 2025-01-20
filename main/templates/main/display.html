@@ -1,0 +1,47 @@
+{% extends "main/characters.html" %}
+
+{% load static %}
+
+{% block right %}
+<div class="right">
+    <div class="image_name">
+        <img src="{{ character_d.image.url }}" height="150px" width="150px">
+        <p1>{{ character_d.name }}</p1>
+    </div>
+    <div class="main_infromation">
+        <div class="main_information_item">
+            <p1>Класс : {{ character_d.klass }}</p1>
+        </div>
+        <div class="main_information_item">
+            <p1>Раса : {{ character_d.rasa }}</p1>
+        </div>
+        <div class="main_information_item">
+            <p1>Уровень : {{ character_d.level}}</p1>
+        </div>
+        <div class="main_information_item">
+            <p1>Опыт : 1700</p1>
+        </div>
+        <div class="main_information_item">
+            <p1>Максимально ХП : {{ character_d.max_health }}</p1>
+        </div>
+        <div class="main_information_item">
+            <p1>Текущее ХП : {{ character_d.cur_health }}</p1>
+        </div>
+        <div class="main_information_item">
+            <p1> Описание : {{ character_d.description }}<p1>
+            </div>
+    </div>  
+    <div class="wrapper-buttons">
+        <div class="button-button">
+            <form method='get' action='rename/'>
+                <button class='delete-button' type='submit' name='character_id_rename' value='{{ character_d.id }}'>Редактировать</button>
+            </form>
+        </div>
+        <div class="button-button">
+            <form method='post'>
+                {% csrf_token %}
+                <button class='delete-button' type='submit' name='character_id' value='{{ character_d.id }}'>Удалить</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

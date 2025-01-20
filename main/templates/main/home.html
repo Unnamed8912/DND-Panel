@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DND</title>
+    <link rel="stylesheet" href="{% static "deps/css/home.css" %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main-text">Dungeons And Dragons</div>
+        <a href="{% url "main:characters" %}" class="btn-flip" data-back="Игру" data-front="Начать"></a>
+    </div>
+</body>
+</html>

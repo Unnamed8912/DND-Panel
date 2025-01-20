@@ -1,0 +1,19 @@
+{% extends "main/characters.html" %}
+
+{% load static %}
+
+{% block right %}
+<div class="right">
+    <div class="image_name">
+        <img src="{% static "deps/image/melisa.jpg" %}" height="150px" width="150px">
+        <p1>Мелисаа</p1>
+    </div>
+    <form method='post'>
+        {% csrf_token %}
+        {{ form.name }}<br>
+        {{ form.klass }}<br>
+        {{ form.rasa }}<br>
+        <button class='button btn-success' type='submit'> Добавить Персонажа </button>
+    </form>
+    <div class="optional_information"></div>
+{% endblock %}

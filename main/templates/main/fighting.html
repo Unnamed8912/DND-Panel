@@ -1,0 +1,59 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "deps/css/fighting.css" %}">
+{% endblock %}
+
+{% block content %}
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Название Боя</th>
+            <th>Статус</th>
+            <th>Дата</th>
+            <th>Подробнее</th>
+            <th>Удалить Бой</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fight in fights %}
+        <tr>
+            <td>{{fight.name}}</td>
+            <td>
+                {% if fight.is_ended %}
+                Закончен
+                {% else %}
+                Продолжается
+                {% endif %}
+            </td>
+            <td>{{fight.date}}</td>
+            <td>
+                <div>
+                    <form method='get' action='current_fight/'>
+                        <button class='button' type='submit' name='fight_id' value='{{ fight.id }}'>Перейти</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <div class="delete-button-wrapper">
+                    <form method='POST'>
+                        {% csrf_token %}
+                        <button class='button' name='deleting-fight-id' value = {{ fight.id }}>Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tdoby>
+</table>
+<div class="wrapper">
+<form method='POST'>
+    {% csrf_token %}
+    <input placeholder='Введите Название Боя' name='name-of-fight'></input>
+    <button class = 'add-button' type='submit'>Добавить Бой</button>
+</form>
+</div>
+{% endblock  %}
+

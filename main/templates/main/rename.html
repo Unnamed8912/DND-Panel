@@ -1,0 +1,42 @@
+{% extends "main/characters.html" %}
+
+{% load static %}
+
+{% block right %}
+<div class="right">
+    <div class="image_name">
+        <img src="{{ character_d.image.url }}" height="150px" width="150px">
+        <p1>{{ character_d.name }}</p1>
+    </div>
+    <div class="main_infromation">
+        <form method='post'>
+            {% csrf_token %}
+            <p1>Имя : </p1>
+            {{ form.name }}<br>
+            <p1>Уровень : </p1>
+            {{ form.level }}<br>
+            <p1>Максимально ХП : </p1>
+            {{ form.max_health }}<br>
+            <p1>Текущее ХП : </p1>
+            {{ form.cur_health }}<br>
+            <p1>Класс : </p1>
+            {{ form.klass }}<br>
+            <p1>Раса : </p1>
+            {{ form.rasa }}<br>
+            <p1>Описание : </p1>
+            {{ form.description }}<br>
+            <script>
+                document.getElementById('name').value = '{{ character_d.name }}';
+                document.getElementById('level').value = '{{ character_d.level }}';
+                document.getElementById('max_health').value = '{{ character_d.max_health }}';
+                document.getElementById('cur_health').value = '{{ character_d.cur_health }}';
+                document.getElementById('klass').value = '{{ character_d.klass }}';
+                document.getElementById('rasa').value = '{{ character_d.rasa }}';
+                document.getElementById('description').value = '{{ character_d.description }}';
+            </script>
+            <button class='button btn-success' type='submit'> Редактировать </button>
+        </form>
+        
+    </div>  
+    
+{% endblock %}

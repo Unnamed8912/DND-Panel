@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<p1> Журнал Боя </p1>
+    <ul>
+        {% for journal in journals %}
+        <li class="journal-item">
+            {% if journal.is_damage %}
+            {{ journal.attacker }} использует {{ journal.spell }} и наносит {{ journal.defender }} {{ journal.health }} единиц урона
+            {% else %}
+            {{ journal.defender }} был убит {{ journal.attacker }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
